@@ -47,7 +47,6 @@
       display: block;
     }
 
-    /* 설정 페이지 */
     .settings-page {
       max-width: 700px;
       margin: 0 auto;
@@ -58,6 +57,51 @@
       padding: 40px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .info-box {
+      background: #f0f8ff;
+      border-left: 4px solid #2196F3;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+    }
+
+    .info-box h3 {
+      color: #1976D2;
+      margin-bottom: 15px;
+    }
+
+    .info-box ul {
+      line-height: 2;
+      color: #333;
+      margin-left: 20px;
+    }
+
+    .legend-box {
+      background: #fff3e0;
+      border-left: 4px solid #FF9800;
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+    }
+
+    .legend-box h3 {
+      color: #F57C00;
+      margin-bottom: 10px;
+    }
+
+    .legend-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .legend-item {
+      background: white;
+      padding: 5px 10px;
+      border-radius: 5px;
     }
 
     .form-group {
@@ -105,7 +149,6 @@
       background: #555;
     }
 
-    /* 업로드 페이지 */
     .upload-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -140,7 +183,6 @@
       transform: scale(1.02);
     }
 
-    /* 결과 페이지 */
     .result-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -174,6 +216,7 @@
       border: 2px solid transparent;
       transition: all 0.2s;
       text-align: center;
+      position: relative;
     }
 
     .student-card:hover {
@@ -243,28 +286,6 @@
       background: #da190b;
     }
 
-    .legend {
-      background: #f9f9f9;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-
-    .legend-items {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-top: 10px;
-    }
-
-    .legend-item {
-      padding: 8px 15px;
-      background: white;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      font-size: 14px;
-    }
-
     .message {
       padding: 15px;
       border-radius: 8px;
@@ -288,7 +309,7 @@
   <div class="container">
     <header>
       <h1>🏫 스마트 반배치 시스템</h1>
-      <p style="color: #666; margin-top: 10px;">PDF 업로드만으로 자동 반배치 완성</p>
+      <p style="color: #666; margin-top: 10px;">특수상황 학생 균등 배치 + 전학 예정 학생 자동 분산</p>
     </header>
 
     <!-- 페이지 1: 설정 -->
@@ -297,30 +318,33 @@
         <div class="settings-box">
           <h2 style="margin-bottom: 20px;">⚙️ 초기 설정</h2>
           
-          <!-- 사용 방법 -->
-          <div style="background: #f0f8ff; border-left: 4px solid #2196F3; padding: 20px; margin-bottom: 30px; border-radius: 8px;">
-            <h3 style="color: #1976D2; margin-bottom: 15px;">📋 사용 방법</h3>
-            <ul style="line-height: 2; color: #333; margin-left: 20px;">
-              <li><strong>동학년 부장 선생님</strong>이 각 반의 성적순 명렬표 PDF를 모두 받습니다</li>
+          <div class="info-box">
+            <h3>📋 사용 방법</h3>
+            <ul>
+              <li><strong>동학년 대표 선생님</strong>이 각 반의 성적순 명렬표 PDF를 모두 받습니다</li>
               <li>1반부터 순서대로 PDF 파일을 업로드합니다</li>
-              <li>학생들은 성적순으로 <strong>설정한 반 수만큼</strong> 자동으로 균등 배치됩니다</li>
-              <li><strong>배치 원리</strong>: 1반 여학생 1등→가반, 남학생 1등→라반부터 시작 (균등 분산)</li>
-              <li>모든 반 업로드 완료 후 결과를 확인하고 필요시 드래그로 조정합니다</li>
-              <li>최종적으로 <strong>엑셀 파일로 다운로드</strong>하여 업무에 활용합니다</li>
-              <li>⚠️ 데이터는 <strong>이 컴퓨터의 브라우저에만</strong> 저장됩니다 (다른 사람과 공유 안 됨)</li>
+              <li><strong>기본 배치 원리:</strong> 1반 여학생 1등→가반, 2등→나반, 3등→다반... / 남학생 1등→라반, 2등→마반, 3등→바반...</li>
+              <li><strong>특수상황 학생</strong>(생활지도/특수/학습부진/다문화)을 자동으로 골고루 분산 배치합니다</li>
+              <li><strong>전학 예정 학생</strong>은 마지막에 균등하게 배치합니다</li>
+              <li>결과 확인 후 필요시 드래그로 조정하고 엑셀 다운로드합니다</li>
+              <li>💾 데이터는 이 컴퓨터 브라우저에 자동 저장됩니다 (새로고침해도 안전)</li>
             </ul>
           </div>
 
-          <div style="background: #fff3e0; border-left: 4px solid #FF9800; padding: 15px; margin-bottom: 30px; border-radius: 8px;">
-            <h3 style="color: #F57C00; margin-bottom: 10px;">🎨 표시 기호</h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px;">
-              <span style="background: white; padding: 5px 10px; border-radius: 5px;">⭐ 생활지도</span>
-              <span style="background: white; padding: 5px 10px; border-radius: 5px;"># 특수</span>
-              <span style="background: white; padding: 5px 10px; border-radius: 5px;">❗ 학습부진</span>
-              <span style="background: white; padding: 5px 10px; border-radius: 5px;">@ 다문화</span>
-              <span style="background: #FFE4E1; padding: 5px 10px; border-radius: 5px;">여학생</span>
-              <span style="background: #E0F2FF; padding: 5px 10px; border-radius: 5px;">남학생</span>
+          <div class="legend-box">
+            <h3>🎨 표시 기호 (중복 가능)</h3>
+            <div class="legend-items">
+              <span class="legend-item">⭐ 생활지도</span>
+              <span class="legend-item"># 특수</span>
+              <span class="legend-item">❗ 학습부진</span>
+              <span class="legend-item">@ 다문화</span>
+              <span class="legend-item">🔄 전학예정</span>
+              <span class="legend-item" style="background: #FFE4E1;">여학생</span>
+              <span class="legend-item" style="background: #E0F2FF;">남학생</span>
             </div>
+            <p style="margin-top: 10px; font-size: 13px; color: #666;">
+              예: @❗김수지 (다문화 + 학습부진)
+            </p>
           </div>
           
           <div class="form-group">
@@ -373,15 +397,14 @@
       <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
         <h2 style="margin-bottom: 20px;">📤 명렬표 업로드</h2>
         
-        <div class="legend">
-          <strong>📌 표시 기호</strong>
+        <div class="legend-box">
+          <h3>🎨 표시 기호</h3>
           <div class="legend-items">
-            <div class="legend-item">⭐ 생활지도</div>
-            <div class="legend-item"># 특수</div>
-            <div class="legend-item">❗ 학습부진</div>
-            <div class="legend-item">@ 다문화</div>
-            <div class="legend-item" style="background: #FFE4E1;">여학생</div>
-            <div class="legend-item" style="background: #E0F2FF;">남학생</div>
+            <span class="legend-item">⭐ 생활지도</span>
+            <span class="legend-item"># 특수</span>
+            <span class="legend-item">❗ 학습부진</span>
+            <span class="legend-item">@ 다문화</span>
+            <span class="legend-item">🔄 전학예정</span>
           </div>
         </div>
 
@@ -401,13 +424,14 @@
         <h2 style="margin-bottom: 10px;">📊 반배치 결과</h2>
         <p style="color: #666; margin-bottom: 20px;">드래그 앤 드롭으로 학생을 다른 반으로 이동할 수 있습니다</p>
 
-        <div class="legend">
-          <strong>📌 표시 기호</strong>
+        <div class="legend-box">
+          <h3>🎨 표시 기호</h3>
           <div class="legend-items">
-            <div class="legend-item">⭐ 생활지도</div>
-            <div class="legend-item"># 특수</div>
-            <div class="legend-item">❗ 학습부진</div>
-            <div class="legend-item">@ 다문화</div>
+            <span class="legend-item">⭐ 생활지도</span>
+            <span class="legend-item"># 특수</span>
+            <span class="legend-item">❗ 학습부진</span>
+            <span class="legend-item">@ 다문화</span>
+            <span class="legend-item">🔄 전학예정</span>
           </div>
         </div>
 
@@ -425,7 +449,6 @@
   </div>
 
   <script>
-    // PDF.js Worker 설정 (Warning 제거)
     if (typeof pdfjsLib !== 'undefined') {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
     }
@@ -438,29 +461,24 @@
     };
 
     let distributedStudents = {};
-    let uploadedClasses = {}; // 업로드된 반 추적
+    let uploadedClasses = {};
     let draggedStudent = null;
     let draggedFrom = null;
 
     const classNames = ['가반', '나반', '다반', '라반', '마반', '바반', '사반', '아반', '자반', '차반'];
 
-    // 페이지 로드 시 자동 저장된 데이터 복원
-    window.addEventListener('load', function() {
-      loadAutoSave();
-    });
+    window.addEventListener('load', loadAutoSave);
 
-    // 자동 저장
     function autoSave() {
       const data = {
-        settings: settings,
-        distributedStudents: distributedStudents,
-        uploadedClasses: uploadedClasses,
+        settings,
+        distributedStudents,
+        uploadedClasses,
         timestamp: new Date().toISOString()
       };
       localStorage.setItem('classDistribution_autoSave', JSON.stringify(data));
     }
 
-    // 자동 저장 데이터 불러오기
     function loadAutoSave() {
       const saved = localStorage.getItem('classDistribution_autoSave');
       if (saved) {
@@ -471,7 +489,6 @@
             distributedStudents = data.distributedStudents;
             uploadedClasses = data.uploadedClasses || {};
             
-            // 설정 값 복원
             document.getElementById('schoolName').value = settings.schoolName;
             document.getElementById('grade').value = settings.grade;
             document.getElementById('currentClasses').value = settings.currentClasses;
@@ -487,7 +504,6 @@
       }
     }
 
-    // 자동 저장 삭제
     function clearAutoSave() {
       localStorage.removeItem('classDistribution_autoSave');
     }
@@ -514,7 +530,6 @@
         return;
       }
 
-      // 반 초기화
       distributedStudents = {};
       uploadedClasses = {};
       for (let i = 0; i < settings.totalClasses; i++) {
@@ -522,7 +537,7 @@
         distributedStudents[classNames[i] + '(남)'] = [];
       }
 
-      autoSave(); // 자동 저장
+      autoSave();
       showMessage('settingsMessage', '설정이 저장되었습니다!', 'success');
       setTimeout(() => showPage(2), 1000);
     }
@@ -534,9 +549,7 @@
       for (let i = 1; i <= settings.currentClasses; i++) {
         const box = document.createElement('div');
         box.className = 'upload-box';
-        if (uploadedClasses[i]) {
-          box.classList.add('uploaded');
-        }
+        if (uploadedClasses[i]) box.classList.add('uploaded');
         box.id = 'upload-box-' + i;
         
         if (uploadedClasses[i]) {
@@ -557,7 +570,6 @@
         
         const input = box.querySelector('input');
         if (input) {
-          // 클릭 업로드
           box.onclick = function(e) {
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
               input.click();
@@ -568,7 +580,6 @@
             handleFileUpload(e, i);
           };
           
-          // 드래그 앤 드롭
           box.ondragover = function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -598,14 +609,11 @@
       }
     }
 
-    // 반 재업로드
     function reuploadClass(classNumber) {
-      // 해당 반 학생들 제거
       for (let key in distributedStudents) {
         distributedStudents[key] = distributedStudents[key].filter(s => s.originalClass !== classNumber);
       }
       
-      // 업로드 기록 삭제
       delete uploadedClasses[classNumber];
       
       autoSave();
@@ -635,9 +643,8 @@
         }
 
         const students = parseStudentData(text);
-        distributeStudents(students, classNumber);
+        distributeStudentsWithBalance(students, classNumber);
 
-        // 업로드 기록 저장
         uploadedClasses[classNumber] = {
           female: students.female.length,
           male: students.male.length
@@ -651,7 +658,7 @@
           <button onclick="reuploadClass(${classNumber}); event.stopPropagation();" style="background: #FF9800; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; font-size: 12px;">다시 업로드</button>
         `;
         
-        autoSave(); // 자동 저장
+        autoSave();
         showMessage('uploadMessage', `${classNumber}반 학생 배치 완료!`, 'success');
       } catch (error) {
         box.classList.remove('uploaded');
@@ -666,7 +673,7 @@
         const arrayBuffer = await file.arrayBuffer();
         const pdf = await pdfjsLib.getDocument({ 
           data: arrayBuffer,
-          verbosity: 0  // 로그 최소화
+          verbosity: 0
         }).promise;
         let fullText = '';
 
@@ -695,30 +702,38 @@
         for (let i = 0; i < parts.length; i++) {
           if (parts[i] === '여' && parts[i + 1]) {
             const name = parts[i + 1];
-            let note = '';
-
-            for (let j = i + 2; j < i + 5 && j < parts.length; j++) {
+            let notes = [];
+            
+            for (let j = i + 2; j < i + 7 && j < parts.length; j++) {
               if (parts[j] === '남' || parts[j] === '여') break;
               if (parts[j] && !parts[j].match(/^\d+$/)) {
-                note = parts[j];
-                break;
+                const note = parts[j].toLowerCase();
+                if (note.includes('생활') || note.includes('특수') || 
+                    note.includes('학습') || note.includes('다문화') || 
+                    note.includes('전학')) {
+                  notes.push(parts[j]);
+                }
               }
             }
 
-            female.push({ name, note, gender: '여' });
+            female.push({ name, notes, gender: '여' });
           } else if (parts[i] === '남' && parts[i + 1]) {
             const name = parts[i + 1];
-            let note = '';
-
-            for (let j = i + 2; j < i + 5 && j < parts.length; j++) {
+            let notes = [];
+            
+            for (let j = i + 2; j < i + 7 && j < parts.length; j++) {
               if (parts[j] === '남' || parts[j] === '여') break;
               if (parts[j] && !parts[j].match(/^\d+$/)) {
-                note = parts[j];
-                break;
+                const note = parts[j].toLowerCase();
+                if (note.includes('생활') || note.includes('특수') || 
+                    note.includes('학습') || note.includes('다문화') || 
+                    note.includes('전학')) {
+                  notes.push(parts[j]);
+                }
               }
             }
 
-            male.push({ name, note, gender: '남' });
+            male.push({ name, notes, gender: '남' });
           }
         }
       }
@@ -726,44 +741,94 @@
       return { female, male };
     }
 
-    function distributeStudents(students, classNumber) {
+    function getPrefixes(notes) {
+      let prefixes = '';
+      const noteStr = notes.join(' ').toLowerCase();
+      
+      if (noteStr.includes('생활')) prefixes += '⭐';
+      if (noteStr.includes('특수')) prefixes += '#';
+      if (noteStr.includes('학습')) prefixes += '❗';
+      if (noteStr.includes('다문화')) prefixes += '@';
+      if (noteStr.includes('전학')) prefixes += '🔄';
+      
+      return prefixes;
+    }
+
+    function hasSpecialNote(notes) {
+      const noteStr = notes.join(' ').toLowerCase();
+      return noteStr.includes('생활') || noteStr.includes('특수') || 
+             noteStr.includes('학습') || noteStr.includes('다문화');
+    }
+
+    function isTransfer(notes) {
+      return notes.some(n => n.toLowerCase().includes('전학'));
+    }
+
+    function distributeStudentsWithBalance(students, classNumber) {
       const totalClasses = settings.totalClasses;
       const femaleStart = (classNumber - 1) % totalClasses;
       const maleStart = (classNumber - 1 + Math.floor(totalClasses / 2)) % totalClasses;
 
-      students.female.forEach((student, i) => {
+      // 1단계: 일반 학생과 특수상황 학생 분리
+      const femaleNormal = students.female.filter(s => !hasSpecialNote(s.notes) && !isTransfer(s.notes));
+      const femaleSpecial = students.female.filter(s => hasSpecialNote(s.notes) && !isTransfer(s.notes));
+      const femaleTransfer = students.female.filter(s => isTransfer(s.notes));
+
+      const maleNormal = students.male.filter(s => !hasSpecialNote(s.notes) && !isTransfer(s.notes));
+      const maleSpecial = students.male.filter(s => hasSpecialNote(s.notes) && !isTransfer(s.notes));
+      const maleTransfer = students.male.filter(s => isTransfer(s.notes));
+
+      // 2단계: 일반 학생 배치
+      femaleNormal.forEach((student, i) => {
         const classIndex = (femaleStart + i) % totalClasses;
         const className = classNames[classIndex] + '(여)';
-        const prefix = getPrefix(student.note);
-        
-        distributedStudents[className].push({
-          ...student,
-          displayName: prefix + student.name,
-          originalClass: classNumber
-        });
+        addStudent(className, student, classNumber);
       });
 
-      students.male.forEach((student, i) => {
+      maleNormal.forEach((student, i) => {
         const classIndex = (maleStart + i) % totalClasses;
         const className = classNames[classIndex] + '(남)';
-        const prefix = getPrefix(student.note);
-        
-        distributedStudents[className].push({
-          ...student,
-          displayName: prefix + student.name,
-          originalClass: classNumber
-        });
+        addStudent(className, student, classNumber);
+      });
+
+      // 3단계: 특수상황 학생 균등 배치
+      femaleSpecial.forEach((student, i) => {
+        const classIndex = (femaleStart + femaleNormal.length + i) % totalClasses;
+        const className = classNames[classIndex] + '(여)';
+        addStudent(className, student, classNumber);
+      });
+
+      maleSpecial.forEach((student, i) => {
+        const classIndex = (maleStart + maleNormal.length + i) % totalClasses;
+        const className = classNames[classIndex] + '(남)';
+        addStudent(className, student, classNumber);
+      });
+
+      // 4단계: 전학 예정 학생 마지막에 균등 배치
+      femaleTransfer.forEach((student, i) => {
+        const classIndex = i % totalClasses;
+        const className = classNames[classIndex] + '(여)';
+        addStudent(className, student, classNumber);
+      });
+
+      maleTransfer.forEach((student, i) => {
+        const classIndex = i % totalClasses;
+        const className = classNames[classIndex] + '(남)';
+        addStudent(className, student, classNumber);
       });
     }
 
-    function getPrefix(note) {
-      if (!note) return '';
-      const lower = note.toLowerCase();
-      if (lower.includes('생활지도')) return '⭐';
-      if (lower.includes('특수')) return '#';
-      if (lower.includes('학습부진')) return '❗';
-      if (lower.includes('다문화')) return '@';
-      return '';
+    function addStudent(className, student, classNumber) {
+      const prefixes = getPrefixes(student.notes);
+      const studentData = {
+        name: student.name,
+        notes: student.notes,
+        displayName: prefixes + student.name,
+        gender: student.gender,
+        originalClass: classNumber
+      };
+      
+      distributedStudents[className].push(studentData);
     }
 
     function renderResult() {
@@ -771,11 +836,9 @@
       grid.innerHTML = '';
 
       for (let i = 0; i < settings.totalClasses; i++) {
-        // 여학생 열
         const femaleCol = createClassColumn(classNames[i] + '(여)', 'female');
         grid.appendChild(femaleCol);
 
-        // 남학생 열
         const maleCol = createClassColumn(classNames[i] + '(남)', 'male');
         grid.appendChild(maleCol);
       }
@@ -797,7 +860,7 @@
         if (draggedStudent && draggedFrom !== className) {
           distributedStudents[draggedFrom] = distributedStudents[draggedFrom].filter(s => s.name !== draggedStudent.name);
           distributedStudents[className].push(draggedStudent);
-          autoSave(); // 자동 저장
+          autoSave();
           renderResult();
         }
       };
@@ -811,7 +874,7 @@
         card.innerHTML = `
           <button class="delete-btn" onclick="deleteStudent('${className}', '${student.name}'); event.stopPropagation();" title="학생 삭제">×</button>
           <div style="font-weight: bold; font-size: 14px;">${student.displayName}</div>
-          ${student.note ? `<div style="font-size: 11px; color: #666; margin-top: 5px;">${student.note}</div>` : ''}
+          ${student.notes && student.notes.length > 0 ? `<div style="font-size: 11px; color: #666; margin-top: 5px;">${student.notes.join(', ')}</div>` : ''}
         `;
 
         card.ondragstart = () => {
@@ -830,11 +893,10 @@
       return col;
     }
 
-    // 학생 삭제
     function deleteStudent(className, studentName) {
-      if (confirm(`${studentName.replace(/^[⭐#❗@]/, '')} 학생을 삭제하시겠습니까?`)) {
+      if (confirm(`${studentName.replace(/^[⭐#❗@🔄]+/, '')} 학생을 삭제하시겠습니까?`)) {
         distributedStudents[className] = distributedStudents[className].filter(s => s.name !== studentName);
-        autoSave(); // 자동 저장
+        autoSave();
         renderResult();
         showMessage('resultMessage', '학생이 삭제되었습니다.', 'success');
       }
@@ -844,43 +906,36 @@
       try {
         const workbook = XLSX.utils.book_new();
 
-        // 각 반별로 시트 생성
         for (let i = 0; i < settings.totalClasses; i++) {
           const className = classNames[i];
           const femaleStudents = distributedStudents[className + '(여)'] || [];
           const maleStudents = distributedStudents[className + '(남)'] || [];
 
-          // 시트 데이터 생성
           const sheetData = [
             ['이름', '성별', '비고']
           ];
 
-          // 여학생 추가
           femaleStudents.forEach(s => {
-            const cleanName = s.name.replace(/^[⭐#❗@]/, '');
-            sheetData.push([cleanName, '여', s.note || '']);
+            const cleanName = s.name.replace(/^[⭐#❗@🔄]+/, '');
+            sheetData.push([cleanName, '여', s.notes ? s.notes.join(', ') : '']);
           });
 
-          // 남학생 추가
           maleStudents.forEach(s => {
-            const cleanName = s.name.replace(/^[⭐#❗@]/, '');
-            sheetData.push([cleanName, '남', s.note || '']);
+            const cleanName = s.name.replace(/^[⭐#❗@🔄]+/, '');
+            sheetData.push([cleanName, '남', s.notes ? s.notes.join(', ') : '']);
           });
 
-          // 시트 생성 및 추가
           const worksheet = XLSX.utils.aoa_to_sheet(sheetData);
           
-          // 열 너비 설정
           worksheet['!cols'] = [
-            { wch: 12 },  // 이름
-            { wch: 6 },   // 성별
-            { wch: 15 }   // 비고
+            { wch: 12 },
+            { wch: 6 },
+            { wch: 20 }
           ];
 
           XLSX.utils.book_append_sheet(workbook, worksheet, className);
         }
 
-        // 엑셀 파일 다운로드
         const fileName = `${settings.schoolName}_${settings.grade}학년_반배치결과.xlsx`;
         XLSX.writeFile(workbook, fileName);
 
@@ -895,7 +950,7 @@
       if (confirm('모든 데이터를 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) {
         distributedStudents = {};
         uploadedClasses = {};
-        clearAutoSave(); // 자동 저장 삭제
+        clearAutoSave();
         showPage(1);
         document.getElementById('schoolName').value = '';
         document.getElementById('grade').value = '';
